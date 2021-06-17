@@ -26,7 +26,7 @@ resource "aws_security_group" "nfs_sg" {
   vpc_id = var.vpc_id
 
   dynamic "ingress" {
-    for_each = var.create_sg_rules ? var.whitelist_cidr : []
+    for_each = length(var.whitelist_cidr) == 0 ? [] : var.whitelist_cidr
     content {
       cidr_blocks = var.whitelist_cidr
       from_port   = local.port
@@ -35,7 +35,7 @@ resource "aws_security_group" "nfs_sg" {
     }
   }
   dynamic "egress" {
-    for_each = var.create_sg_rules ? var.whitelist_cidr : []
+    for_each = length(var.whitelist_cidr) == 0 ? [] : var.whitelist_cidr
     content {
       cidr_blocks = var.whitelist_cidr
       from_port   = 0
@@ -45,7 +45,7 @@ resource "aws_security_group" "nfs_sg" {
   }
 
   dynamic "ingress" {
-    for_each = var.create_sg_rules ? var.whitelist_sg : []
+    for_each = length(var.whitelist_sg) == 0 ? [] : var.whitelist_sg
     content {
       security_groups = var.whitelist_sg
       from_port       = local.port
@@ -54,7 +54,7 @@ resource "aws_security_group" "nfs_sg" {
     }
   }
   dynamic "egress" {
-    for_each = var.create_sg_rules ? var.whitelist_sg : []
+    for_each = length(var.whitelist_sg) == 0 ? [] : var.whitelist_sg
     content {
       security_groups = var.whitelist_sg
       from_port       = 0

@@ -49,7 +49,7 @@ variable "subnet_ids" {
 variable "whitelist_cidr" {
   description = "List of CIDR blocks for whitelist"
   type        = list(string)
-  default     = ["0.0.0.0/0"]
+  default     = []
 }
 variable "whitelist_sg" {
   description = "List of Security Groups Block for whitelist"
